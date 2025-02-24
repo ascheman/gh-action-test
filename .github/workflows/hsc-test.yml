@@ -1,0 +1,23 @@
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  hsc-test:
+    runs-on: ubuntu-latest
+    name: A job to test HSC GH Action
+    steps:
+      - uses: actions/checkout@v4
+        name: Check Out
+
+      - uses: aim42/htmlSanityCheck@5aa95d477be340cd25590c6c175d197dd05bc255
+        name: Test HSC
+        with:
+          args: -vvvv -r hsc docs
+      
+      - uses: actions/upload-artifact@v4
+        if: always()
+        name: Upload HSC Report
+        with:
+          name: hsc-report
+          path: hsc

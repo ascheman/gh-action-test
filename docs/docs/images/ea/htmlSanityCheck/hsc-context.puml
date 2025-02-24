@@ -1,0 +1,27 @@
+@startuml
+actor User
+actor "Build System\n(e.g., Gradle, make)" as BuildSystem
+
+rectangle "Html Sanity Check" as HtmlSanityCheck {
+}
+
+rectangle "Local Images" as LocalImages {
+}
+
+rectangle "Local HTML file(s)" as LocalHTML {
+}
+
+rectangle "External websites & resources" as ExternalResources {
+}
+
+User --> HtmlSanityCheck
+BuildSystem --> HtmlSanityCheck
+
+HtmlSanityCheck --> LocalImages : checks
+HtmlSanityCheck --> LocalHTML : checks
+LocalHTML --> LocalImages : references
+
+HtmlSanityCheck --> ExternalResources : checks <<Risk>>
+LocalHTML --> ExternalResources : references <<postponed>>
+
+@enduml
